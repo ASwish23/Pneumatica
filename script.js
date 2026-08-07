@@ -1,6 +1,6 @@
 ﻿'use strict';
 /* ═══════════════════════════════════════════════════════
-   VIANOR – script.js  |  Global JS
+   Centru anvelope PNEUMATICA – script.js  |  Global JS
    ═══════════════════════════════════════════════════════ */
 
 // ── 1. HAMBURGER MENU ────────────────────────────────────────────────────────
@@ -142,7 +142,8 @@ document.querySelectorAll('.js-carousel').forEach(carousel => {
   if (!track || !dotsBox || !prevBtn || !nextBtn) return;
 
   const slides = Array.from(track.children);
-  const AUTOPLAY_MS = 6000;
+  const parsedAutoplay = parseInt(carousel.dataset.autoplay, 10);
+  const AUTOPLAY_MS = Number.isNaN(parsedAutoplay) ? 6000 : parsedAutoplay; // "0" must stay disabled, not fall back
   let current = 0;
   let autoplayId = null;
 
@@ -174,16 +175,16 @@ document.querySelectorAll('.js-carousel').forEach(carousel => {
   const next = () => goTo(current + 1);
   const prev = () => goTo(current - 1);
 
-  function startAutoplay() { autoplayId = setInterval(next, AUTOPLAY_MS); }
+  function startAutoplay() { if (AUTOPLAY_MS > 0) autoplayId = setInterval(next, AUTOPLAY_MS); }
   function restartAutoplay() { clearInterval(autoplayId); startAutoplay(); }
 
   nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
 
   carousel.addEventListener('mouseenter', () => clearInterval(autoplayId));
-  carousel.addEventListener('mouseleave', startAutoplay);
+  carousel.addEventListener('mouseleave', () => { if (AUTOPLAY_MS > 0) startAutoplay(); });
   carousel.addEventListener('focusin', () => clearInterval(autoplayId));
-  carousel.addEventListener('focusout', startAutoplay);
+  carousel.addEventListener('focusout', () => { if (AUTOPLAY_MS > 0) startAutoplay(); });
 
   carousel.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') next();

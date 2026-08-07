@@ -1,5 +1,5 @@
 ﻿/* ═══════════════════════════════════════════════════════
-   VIANOR – Service Auto & Vulcanizare
+   Centru anvelope PNEUMATICA – Service Auto & Vulcanizare
    style.css  |  Global Stylesheet
    ═══════════════════════════════════════════════════════ */
 
@@ -734,24 +734,26 @@ p  { color: var(--gray); line-height: 1.78; }
 .about-visual { display: flex; flex-direction: column; gap: 1.5rem; }
 
 .info-card {
-  background: var(--dark);
+  background: linear-gradient(135deg, #FF7A00 0%, #E66A00 100%);
   border-radius: var(--r-md);
   padding: 1.75rem 2rem;
-  border: 1px solid rgba(255,255,255,0.06);
-  transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+  border: none;
+  transition: transform var(--ease), box-shadow var(--ease);
 }
 .info-card:hover {
   transform: translateY(-5px);
-  border-color: var(--border-orange);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.25);
+  box-shadow: 0 12px 40px rgba(255, 122, 0, 0.35);
 }
 .info-card.accent {
-  border-color: var(--border-orange);
-  background: linear-gradient(135deg, rgba(255,107,0,0.09) 0%, #2a2a2a 100%);
+  background: #111111;
+  border: none;
 }
-.info-card-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
-.info-card h3  { color: var(--white); margin-bottom: 0.5rem; font-size: 1.05rem; }
-.info-card p   { color: rgba(255,255,255,0.5); font-size: 0.88rem; line-height: 1.65; }
+.info-card.accent:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.info-card-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; color: #FFFFFF; }
+.info-card h3  { color: #FFFFFF; margin-bottom: 0.5rem; font-size: 1.05rem; }
+.info-card p   { color: #FFFFFF; font-size: 0.88rem; line-height: 1.65; }
 
 /* Values grid */
 .values-section {
@@ -956,6 +958,33 @@ p  { color: var(--gray); line-height: 1.78; }
   gap: 1.5rem;
 }
 
+/* ── Compact Seamless Carousel (Servicii page, between card groups) ── */
+.servicii-carousel-wrap {
+  max-width: var(--max-w);
+  margin: 5rem auto;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+.servicii-carousel {
+  position: relative;
+  width: 100%;
+  height: 37.5vh;
+  min-height: 195px;
+  overflow: hidden;
+  background: var(--dark);
+  outline: none;
+  --visible: 3;
+  --slide-gap: 0px;
+}
+@media (max-width: 960px) {
+  .servicii-carousel { --visible: 2; }
+}
+@media (max-width: 600px) {
+  .servicii-carousel { --visible: 1; }
+}
+.servicii-carousel:focus-visible { box-shadow: inset 0 0 0 3px var(--orange-glow); }
+
 .gallery-image {
   border-radius: var(--r-lg);
   overflow: hidden;
@@ -1018,7 +1047,7 @@ p  { color: var(--gray); line-height: 1.78; }
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "info form";
   gap: 3rem;
-  align-items: start;
+  align-items: stretch;
 }
 
 .contact-info {
@@ -1065,27 +1094,19 @@ p  { color: var(--gray); line-height: 1.78; }
 /* Social links */
 .social-links {
   display: flex;
-  gap: 0.6rem;
-  margin-top: 0.4rem;
+  gap: 1.2rem;
+  margin-top: 0.6rem;
 }
 .social-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--white);
   color: var(--dark);
-  border: 1px solid var(--border-light);
-  transition: background var(--ease), color var(--ease), transform var(--ease), box-shadow var(--ease);
+  transition: color var(--ease), transform var(--ease);
 }
 .social-link:hover {
-  background: var(--orange);
-  color: var(--white);
-  border-color: var(--orange);
-  transform: scale(1.12) translateY(-2px);
-  box-shadow: var(--shadow-orange);
+  color: var(--orange);
+  transform: scale(1.15) translateY(-2px);
 }
 
 /* Map: wide horizontal band below the top section */

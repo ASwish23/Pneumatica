@@ -224,7 +224,23 @@ p  { color: var(--gray); line-height: 1.78; }
 }
 
 /* Logo */
-.logo            { font-size: 1.75rem; font-weight: 900; letter-spacing: -0.5px; }
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1.75rem;
+  font-weight: 900;
+  letter-spacing: -0.5px;
+}
+
+.logo-img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
+}
+
+.logo-text { display: inline-block; white-space: nowrap; }
+.logo-dark, .logo-orange { display: inline; margin: 0; padding: 0; }
 .logo-dark       { color: var(--dark); }
 .logo-orange     { color: var(--orange); }
 
@@ -1252,32 +1268,155 @@ p  { color: var(--gray); line-height: 1.78; }
   gap: 1.5rem;
 }
 
-/* ── Compact Seamless Carousel (Servicii page, between card groups) ── */
-.servicii-carousel-wrap {
-  max-width: var(--max-w);
-  margin: 5rem auto;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
-}
-.servicii-carousel {
+/* ── Servicii: Futuristic Spotlight Carousel (between card groups) ── */
+.servicii-carousel-section {
   position: relative;
-  width: 100%;
-  height: 37.5vh;
-  min-height: 195px;
+  background: #0a0a0c;
+  padding: 90px 1.5rem;
   overflow: hidden;
-  background: var(--dark);
-  outline: none;
-  --visible: 3;
-  --slide-gap: 0px;
 }
-@media (max-width: 960px) {
-  .servicii-carousel { --visible: 2; }
+/* Ambient neon-orange glow, matches Reviews section */
+.servicii-carousel-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 0%, rgba(255,107,0,0.20) 0%, transparent 68%),
+    radial-gradient(ellipse 45% 45% at 90% 100%, rgba(255,107,0,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 45% at 5% 85%, rgba(255,107,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* Faint tech grid overlay */
+.servicii-carousel-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, black 0%, transparent 78%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, black 0%, transparent 78%);
+  pointer-events: none;
+}
+
+.servicii-carousel-outer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Swiper container */
+.servicii-swiper {
+  padding: 20px 60px 70px;
+  overflow: visible;
+}
+@media (max-width: 768px) {
+  .servicii-swiper { padding: 16px 10px 60px; }
+}
+
+.servicii-swiper .swiper-wrapper { align-items: center; }
+
+/* Slide with Spotlight Effect — inactive/side slides recede */
+.servicii-swiper .swiper-slide {
+  height: 280px;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.5s ease;
+  transform: scale(0.85);
+  opacity: 0.5;
+  z-index: 1;
 }
 @media (max-width: 600px) {
-  .servicii-carousel { --visible: 1; }
+  .servicii-swiper .swiper-slide { height: 200px; }
 }
-.servicii-carousel:focus-visible { box-shadow: inset 0 0 0 3px var(--orange-glow); }
+
+.servicii-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Active (Center) Slide — fully opaque, scaled up, glowing */
+.servicii-swiper .swiper-slide-active {
+  transform: scale(1.05);
+  opacity: 1;
+  z-index: 10;
+  box-shadow: 0 0 0 1px rgba(255,107,0,0.3), 0 0 50px rgba(255,107,0,0.28), 0 20px 60px rgba(0,0,0,0.6);
+}
+
+/* Navigation arrows, matches Reviews section styling */
+.servicii-arrow-prev,
+.servicii-arrow-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease), transform 0.3s ease, box-shadow var(--ease);
+  z-index: 20;
+}
+.servicii-arrow-prev { left: 0; }
+.servicii-arrow-next { right: 0; }
+.servicii-arrow-prev svg,
+.servicii-arrow-next svg { width: 20px; height: 20px; }
+.servicii-arrow-prev:hover,
+.servicii-arrow-next:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 26px rgba(255,107,0,0.5);
+}
+.servicii-arrow-prev.swiper-button-disabled,
+.servicii-arrow-next.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+@media (max-width: 768px) {
+  .servicii-arrow-prev { left: -5px; }
+  .servicii-arrow-next { right: -5px; }
+}
+
+/* Pagination dots */
+.servicii-pagination {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+.servicii-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid rgba(255,107,0,0.4);
+  opacity: 1;
+  cursor: pointer;
+  transition: all var(--ease);
+}
+.servicii-pagination .swiper-pagination-bullet-active {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(255,107,0,0.6);
+}
 
 .gallery-image {
   border-radius: var(--r-lg);

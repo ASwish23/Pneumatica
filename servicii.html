@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -16,7 +17,8 @@
   <nav class="navbar" id="navbar">
     <div class="nav-container">
       <a href="index.html" class="logo">
-        <span class="logo-dark">PNEUM</span><span class="logo-orange">ATICA</span>
+        <img src="logo.png" alt="PNEUMATICA Logo" class="logo-img" />
+        <span class="logo-text"><span class="logo-dark">PNEUM</span><span class="logo-orange">ATICA</span></span>
       </a>
       <button class="hamburger" id="hamburger" aria-label="Deschide meniu" aria-expanded="false">
         <span></span><span></span><span></span>
@@ -110,40 +112,46 @@
     </div>
 
     <!-- ▸ Compact Seamless Image Carousel (between card groups) -->
-    <div class="servicii-carousel-wrap reveal">
-      <div class="servicii-carousel js-carousel" id="servicii-carousel" data-autoplay="0" role="region" aria-roledescription="carusel" aria-label="Galerie foto servicii" tabindex="0">
-        <div class="carousel-track" id="serviciiCarouselTrack">
-          <div class="carousel-slide">
+  </section>
+
+  <!-- ══ SERVICII: FUTURISTIC SPOTLIGHT CAROUSEL ══ -->
+  <section class="servicii-carousel-section">
+    <div class="servicii-carousel-outer reveal">
+      <div class="swiper servicii-swiper" id="servicii-carousel" role="region" aria-roledescription="carusel" aria-label="Galerie foto servicii">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.15.31%20PM.jpeg" alt="Centru anvelope PNEUMATICA - montaj anvelope" loading="lazy" />
           </div>
-          <div class="carousel-slide">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.15.44%20PM.jpeg" alt="Centru anvelope PNEUMATICA - jante auto" loading="lazy" />
           </div>
-          <div class="carousel-slide">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.15.55%20PM.jpeg" alt="Centru anvelope PNEUMATICA - vulcanizare" loading="lazy" />
           </div>
-          <div class="carousel-slide">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.16.01%20PM.jpeg" alt="Centru anvelope PNEUMATICA - echilibrare roți" loading="lazy" />
           </div>
-          <div class="carousel-slide">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.16.08%20PM%20(1).jpeg" alt="Centru anvelope PNEUMATICA - anvelope camioane" loading="lazy" />
           </div>
-          <div class="carousel-slide">
+          <div class="swiper-slide">
             <img src="Poze%20servicii/WhatsApp%20Image%202026-07-02%20at%202.18.09%20PM%20(2).jpeg" alt="Centru anvelope PNEUMATICA - presiune anvelope cu azot" loading="lazy" />
           </div>
         </div>
 
-        <button class="carousel-arrow carousel-arrow-prev" id="serviciiPrev" type="button" aria-label="Imaginea anterioară">
+        <div class="swiper-button-prev servicii-arrow-prev" aria-label="Imaginea anterioară">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="carousel-arrow carousel-arrow-next" id="serviciiNext" type="button" aria-label="Imaginea următoare">
+        </div>
+        <div class="swiper-button-next servicii-arrow-next" aria-label="Imaginea următoare">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
+        </div>
 
-        <div class="carousel-dots" id="serviciiCarouselDots"></div>
+        <div class="swiper-pagination servicii-pagination"></div>
       </div>
     </div>
+  </section>
 
+  <section class="servicii-section">
     <!-- ▸ Second 4 Service Cards -->
     <div class="services-grid reveal">
       <article class="service-card">
@@ -261,7 +269,8 @@
     <div class="footer-container">
       <div class="footer-brand">
         <a href="index.html" class="logo">
-          <span class="logo-orange">PNEUM</span><span class="logo-orange">ATICA</span>
+          <img src="logo.png" alt="PNEUMATICA Logo" class="logo-img" />
+          <span class="logo-text"><span class="logo-orange">PNEUM</span><span class="logo-orange">ATICA</span></span>
         </a>
         <p>Service Auto &amp; Vulcanizare</p>
       </div>
@@ -274,6 +283,56 @@
     </div>
     <p class="footer-copy">© 2026 Centru Anvelope PNEUMATICA. Toate drepturile rezervate.</p>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script>
+    // Manual Navigation Only (no autoplay) with Center Spotlight Effect
+    const serviciiSwiper = new Swiper('.servicii-swiper', {
+      autoplay: false,
+      loop: true,
+      centeredSlides: true,
+
+      slidesPerView: 1,
+      spaceBetween: 30,
+
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+          spaceBetween: 30,
+          centeredSlides: true
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+          centeredSlides: true
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+          centeredSlides: true
+        }
+      },
+
+      navigation: {
+        nextEl: '.servicii-arrow-next',
+        prevEl: '.servicii-arrow-prev',
+      },
+
+      pagination: {
+        el: '.servicii-pagination',
+        clickable: true
+      },
+
+      speed: 500,
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true
+      },
+      a11y: {
+        enabled: true
+      }
+    });
+  </script>
 
   <script src="script.js"></script>
 </body>

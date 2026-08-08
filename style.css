@@ -637,6 +637,254 @@ p  { color: var(--gray); line-height: 1.78; }
 
 
 /* ══════════════════════════════════════════════════════
+   8B.  HOME — CUSTOMER REVIEWS CAROUSEL (Swiper.js)
+   ══════════════════════════════════════════════════════ */
+.reviews-section {
+  position: relative;
+  background: #0a0a0c;
+  padding: 100px 1.5rem;
+  overflow: hidden;
+}
+/* Ambient neon-orange glow */
+.reviews-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 0%, rgba(255,107,0,0.20) 0%, transparent 68%),
+    radial-gradient(ellipse 45% 45% at 90% 100%, rgba(255,107,0,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 45% at 5% 85%, rgba(255,107,0,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+/* Faint tech grid overlay */
+.reviews-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, black 0%, transparent 78%);
+  mask-image: radial-gradient(ellipse 70% 65% at 50% 35%, black 0%, transparent 78%);
+  pointer-events: none;
+}
+
+.reviews-section .section-intro { position: relative; z-index: 1; }
+.reviews-section .section-tag { background: rgba(255,107,0,0.18); color: #ffb36b; }
+.reviews-section .section-intro h2 { color: var(--white); }
+.reviews-section .section-intro p  { color: rgba(255,255,255,0.55); }
+
+.reviews-carousel-outer {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* Swiper Container */
+.reviews-swiper {
+  padding: 40px 60px 80px;
+  overflow: visible;
+}
+@media (max-width: 768px) {
+  .reviews-swiper { padding: 30px 10px 70px; }
+}
+
+.reviews-swiper .swiper-wrapper {
+  align-items: center;
+  padding: 10px 0;
+}
+
+/* Swiper Slide with Spotlight Effect */
+.reviews-swiper .swiper-slide {
+  height: auto;
+  transition: all 0.5s ease;
+  transform: scale(0.9);
+  opacity: 0.5;
+  z-index: 1;
+}
+
+/* Active (Center) Slide - Spotlight Effect */
+.reviews-swiper .swiper-slide-active {
+  transform: scale(1.05);
+  opacity: 1;
+  z-index: 10;
+}
+
+.reviews-swiper .swiper-slide-active .review-card {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,107,0,0.45);
+  box-shadow: 0 0 0 1px rgba(255,107,0,0.3), 0 0 50px rgba(255,107,0,0.24), 0 20px 60px rgba(0,0,0,0.55);
+}
+
+/* Review Card — glassmorphism against the dark backdrop */
+.review-card {
+  position: relative;
+  height: 100%;
+  background: rgba(255,255,255,0.055);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: var(--r-lg);
+  padding: 2rem 1.75rem 1.75rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.35);
+  border: 1px solid rgba(255,255,255,0.10);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.5s ease;
+}
+
+.review-quote {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  width: 54px;
+  height: 54px;
+  color: var(--orange);
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+.review-stars {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 0.9rem;
+  position: relative;
+  z-index: 1;
+}
+.review-stars svg { width: 18px; height: 18px; fill: #FFB400; }
+
+.review-text {
+  position: relative;
+  z-index: 1;
+  color: rgba(255,255,255,0.82);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.review-footer {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+  z-index: 1;
+}
+
+.review-avatar {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(255,107,0,0.18);
+  color: #ffb36b;
+  font-weight: 800;
+  font-size: 1.05rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-meta { display: flex; flex-direction: column; gap: 0.2rem; min-width: 0; }
+.review-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.google-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.5);
+}
+.google-g { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* Swiper Navigation Arrows */
+.reviews-arrow-prev,
+.reviews-arrow-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 4px 18px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease), transform 0.3s ease, box-shadow var(--ease);
+  z-index: 20;
+}
+.reviews-arrow-prev { left: 0; }
+.reviews-arrow-next { right: 0; }
+
+.reviews-arrow-prev svg,
+.reviews-arrow-next svg { width: 20px; height: 20px; }
+
+.reviews-arrow-prev:hover,
+.reviews-arrow-next:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 26px rgba(255,107,0,0.5);
+}
+
+.reviews-arrow-prev.swiper-button-disabled,
+.reviews-arrow-next.swiper-button-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .reviews-arrow-prev { left: -5px; }
+  .reviews-arrow-next { right: -5px; }
+}
+
+/* Swiper Pagination (Dots) */
+.reviews-pagination {
+  position: relative;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.reviews-pagination .swiper-pagination-bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  border: 2px solid rgba(255,107,0,0.4);
+  opacity: 1;
+  cursor: pointer;
+  transition: all var(--ease);
+}
+
+.reviews-pagination .swiper-pagination-bullet-active {
+  background: var(--orange);
+  border-color: var(--orange);
+  transform: scale(1.15);
+  box-shadow: 0 0 10px rgba(255,107,0,0.6);
+}
+
+
+/* ══════════════════════════════════════════════════════
    9.  SHARED: SERVICE CARDS  (used on home + servicii)
    ══════════════════════════════════════════════════════ */
 .service-card {
@@ -814,6 +1062,52 @@ p  { color: var(--gray); line-height: 1.78; }
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
+
+/* ── Servicii: infinite scrolling brand logo ticker ── */
+.logo-ticker {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  overflow: hidden;
+  padding: 55px 0;
+}
+
+.logo-ticker-track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  animation: logoTickerScroll 28s linear infinite;
+}
+
+.logo-ticker:hover .logo-ticker-track {
+  animation-play-state: paused;
+}
+
+.ticker-logo {
+  height: 60px;
+  width: auto;
+  flex-shrink: 0;
+  margin: 0 40px;
+  opacity: 0.5;
+  filter: grayscale(100%);
+  transition: opacity var(--ease), filter var(--ease);
+}
+.ticker-logo:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+}
+
+@keyframes logoTickerScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@media (max-width: 640px) {
+  .logo-ticker { padding: 40px 0; }
+  .ticker-logo { height: 42px; margin: 0 26px; }
+}
+
+
 
 /* ── Servicii: editorial zig-zag image + card layout ── */
 .services-editorial {

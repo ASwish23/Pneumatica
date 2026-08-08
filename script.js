@@ -83,7 +83,19 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 const contactForm = document.getElementById('contact-form');
 const formNote    = document.getElementById('form-note');
 
-if (contactForm && formNote) {
+// Guard against #contact-form resolving to something that isn't actually a <form>
+if (contactForm && !(contactForm instanceof HTMLFormElement)) {
+  console.error('Error: #contact-form was found but is not a <form> element:', contactForm);
+}
+
+if (contactForm instanceof HTMLFormElement && formNote) {
+  // EmailJS must be initialized before sendForm() is ever called
+  if (typeof emailjs !== 'undefined') {
+    emailjs.init('c3m9HInwcnQozOpZo');
+  } else {
+    console.error('Error: the EmailJS SDK is not loaded — check the CDN <script> tag in contact.html.');
+  }
+
   contactForm.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -117,13 +129,22 @@ if (contactForm && formNote) {
     btn.textContent = 'Se trimite…';
     formNote.textContent = '';
 
-    // Simulated async submit – replace with real fetch() in production
-    setTimeout(() => {
-      showNote('✓ Mesajul a fost trimis! Vă vom contacta în curând.', 'success');
-      contactForm.reset();
-      btn.disabled = false;
-      btn.textContent = 'Trimite Mesajul';
-    }, 1400);
+    emailjs.sendForm('service_l5azp7g', 'template_d4ebzsb', contactForm)
+      .then(response => {
+        console.log('EmailJS success:', response);
+        alert('Mesajul a fost trimis cu succes!');
+        showNote('✓ Mesajul a fost trimis! Vă vom contacta în curând.', 'success');
+        contactForm.reset();
+      })
+      .catch(error => {
+        console.error('EmailJS Error Object:', error.text || error.message || error);
+        alert('A apărut o eroare la trimiterea mesajului. Vă rugăm încercați din nou.');
+        showNote('A apărut o eroare la trimiterea mesajului. Vă rugăm încercați din nou.', 'error');
+      })
+      .finally(() => {
+        btn.disabled = false;
+        btn.textContent = 'Trimite Mesajul';
+      });
   });
 
   function showNote(msg, type) {

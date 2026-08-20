@@ -89,13 +89,6 @@ if (contactForm && !(contactForm instanceof HTMLFormElement)) {
 }
 
 if (contactForm instanceof HTMLFormElement && formNote) {
-  // EmailJS must be initialized before sendForm() is ever called
-  if (typeof emailjs !== 'undefined') {
-    emailjs.init('c3m9HInwcnQozOpZo');
-  } else {
-    console.error('Error: the EmailJS SDK is not loaded — check the CDN <script> tag in contact.html.');
-  }
-
   contactForm.addEventListener('submit', e => {
     e.preventDefault();
 
@@ -124,27 +117,23 @@ if (contactForm instanceof HTMLFormElement && formNote) {
       return;
     }
 
-    const btn = contactForm.querySelector('button[type="submit"]');
-    btn.disabled = true;
-    btn.textContent = 'Se trimite…';
-    formNote.textContent = '';
+    const serviceSelect = contactForm.elements['service'];
+    const service = serviceSelect && serviceSelect.value ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
+    const marca   = contactForm.elements['marca'].value.trim();
+    const an      = contactForm.elements['an'].value.trim();
+    const message = contactForm.elements['message'].value.trim();
 
-    emailjs.sendForm('service_l5azp7g', 'template_d4ebzsb', contactForm)
-      .then(response => {
-        console.log('EmailJS success:', response);
-        alert('Mesajul a fost trimis cu succes!');
-        showNote('✓ Mesajul a fost trimis! Vă vom contacta în curând.', 'success');
-        contactForm.reset();
-      })
-      .catch(error => {
-        console.error('EmailJS Error Object:', error.text || error.message || error);
-        alert('A apărut o eroare la trimiterea mesajului. Vă rugăm încercați din nou.');
-        showNote('A apărut o eroare la trimiterea mesajului. Vă rugăm încercați din nou.', 'error');
-      })
-      .finally(() => {
-        btn.disabled = false;
-        btn.textContent = 'Trimite Mesajul';
-      });
+    const lines = [`Nume: ${name}`, `Telefon: ${phone}`];
+    if (email)   lines.push(`Email: ${email}`);
+    if (service) lines.push(`Serviciu: ${service}`);
+    if (marca)   lines.push(`Marca: ${marca}`);
+    if (an)      lines.push(`An: ${an}`);
+    if (message) lines.push(`Mesaj: ${message}`);
+
+    formNote.textContent = '';
+    showNote('Se deschide WhatsApp…', 'success');
+
+    window.location.href = `https://wa.me/40724404040?text=${encodeURIComponent(lines.join('\n'))}`;
   });
 
   function showNote(msg, type) {

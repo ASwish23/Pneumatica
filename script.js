@@ -133,7 +133,8 @@ if (contactForm instanceof HTMLFormElement && formNote) {
     formNote.textContent = '';
     showNote('Se deschide WhatsApp…', 'success');
 
-    window.location.href = `https://wa.me/40724404040?text=${encodeURIComponent(lines.join('\n'))}`;
+    window.location.href = `https://wa.me/40770249073?text=${encodeURIComponent(lines.join('\n'))}`;
+    contactForm.reset();
   });
 
   function showNote(msg, type) {

@@ -1478,7 +1478,7 @@ p  { color: var(--gray); line-height: 1.78; }
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "info form";
+  grid-template-areas: "info call";
   gap: 3rem;
   align-items: stretch;
 }
@@ -1599,72 +1599,44 @@ p  { color: var(--gray); line-height: 1.78; }
   box-shadow: 0 12px 48px rgba(255, 107, 0, 0.42);
 }
 
-/* Contact Form */
-.contact-form-wrap {
-  grid-area: form;
-  background: var(--light);
+/* Contact — phone booking card */
+.contact-call {
+  grid-area: call;
+  background: var(--dark);
   padding: 2.75rem;
   border-radius: var(--r-lg);
-  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  overflow: hidden;
 }
-.contact-form-wrap h2 { font-size: 1.6rem; margin-bottom: 1.75rem; }
-.contact-form-wrap .btn-primary:hover {
-  transform: translateY(-3px) scale(1.02);
+.contact-call::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 100% 0%, rgba(255,107,0,0.18) 0%, transparent 65%);
+  pointer-events: none;
 }
-
-.form-group { margin-bottom: 1.2rem; }
-
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
-
-.form-group label {
+.contact-call > * { position: relative; z-index: 1; }
+.contact-call h2 { color: var(--white); font-size: 1.6rem; margin-bottom: 1rem; }
+.contact-call p { color: rgba(255,255,255,0.68); font-size: 0.97rem; line-height: 1.78; }
+.contact-call .call-number {
   display: block;
-  font-size: 0.82rem;
-  font-weight: 700;
-  color: var(--dark);
-  letter-spacing: 0.3px;
-  margin-bottom: 0.5rem;
+  margin: 1.75rem 0 1.5rem;
+  color: var(--white);
+  font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  transition: color var(--ease);
 }
-.required { color: var(--orange); }
-
-.form-group input,
-.form-group textarea,
-.form-group select {
-  width: 100%;
-  padding: 0.82rem 1rem;
-  border: 1.5px solid rgba(0,0,0,0.10);
-  border-radius: var(--r-sm);
-  font-size: 0.93rem;
-  color: var(--dark);
-  background: var(--white);
-  transition: border-color var(--ease), box-shadow var(--ease);
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-}
-.form-group input:focus,
-.form-group textarea:focus,
-.form-group select:focus {
-  border-color: var(--orange);
-  box-shadow: 0 0 0 3px rgba(255,107,0,0.12);
-}
-.form-group textarea  { resize: vertical; min-height: 120px; }
-.form-group select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%236c757d' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 0.9rem center;
-  padding-right: 2.5rem;
-}
-
-.form-note {
-  text-align: center;
-  margin-top: 0.8rem;
-  font-size: 0.88rem;
-  min-height: 1.4em;
-  font-weight: 600;
+.contact-call .call-number:hover { color: var(--orange); }
+.contact-call .btn-primary:hover { transform: translateY(-3px) scale(1.02); }
+.contact-call .call-hours {
+  margin-top: 1.5rem;
+  font-size: 0.86rem;
+  color: rgba(255,255,255,0.45);
 }
 
 
@@ -1727,7 +1699,7 @@ p  { color: var(--gray); line-height: 1.78; }
     grid-template-columns: 1fr;
     grid-template-areas:
       "info"
-      "form";
+      "call";
     gap: 2rem;
   }
   .map-feature { height: 320px; margin-top: 3rem; }
@@ -1772,8 +1744,7 @@ p  { color: var(--gray); line-height: 1.78; }
   .values-grid { grid-template-columns: repeat(2, 1fr); }
   .stats-row-inner { gap: 2.5rem; }
 
-  .contact-form-wrap { padding: 2rem 1.5rem; }
-  .form-row { grid-template-columns: 1fr; }
+  .contact-call { padding: 2rem 1.5rem; }
 }
 
 @media (max-width: 540px) {
@@ -1793,3 +1764,185 @@ p  { color: var(--gray); line-height: 1.78; }
   }
   .gallery-image { height: 220px; }
 }
+
+
+/* ══════════════════════════════════════════════════════
+   LEGAL PAGES  (privacy policy)
+   ══════════════════════════════════════════════════════ */
+.legal-section {
+  background: var(--white);
+  padding: 80px 1.5rem 100px;
+}
+.legal-content {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.legal-content h2 {
+  font-size: 1.4rem;
+  margin: 2.75rem 0 1rem;
+}
+.legal-content h3 {
+  font-size: 1.05rem;
+  margin: 1.75rem 0 0.6rem;
+}
+.legal-content p,
+.legal-content li {
+  font-size: 0.97rem;
+  line-height: 1.78;
+}
+.legal-content p { margin-bottom: 1rem; }
+.legal-content ul {
+  margin: 0 0 1.25rem 1.25rem;
+  list-style: disc;
+}
+.legal-content li { margin-bottom: 0.4rem; }
+.legal-content a {
+  color: var(--orange);
+  font-weight: 600;
+  transition: color var(--ease);
+}
+.legal-content a:hover { color: var(--orange-dark); }
+.legal-updated {
+  font-size: 0.86rem !important;
+  color: var(--gray);
+  margin-bottom: 0 !important;
+}
+.legal-details {
+  list-style: none !important;
+  margin-left: 0 !important;
+  padding: 1.5rem 1.75rem;
+  background: var(--light);
+  border: 1px solid var(--border-light);
+  border-radius: var(--r-lg);
+}
+.legal-details li { margin-bottom: 0.5rem; }
+.legal-details li:last-child { margin-bottom: 0; }
+
+@media (max-width: 768px) {
+  .legal-section { padding: 56px 1.5rem 72px; }
+  .legal-details { padding: 1.25rem; }
+}
+
+
+/* ══════════════════════════════════════════════════════
+   COOKIE CONSENT
+   ══════════════════════════════════════════════════════ */
+.cookie-banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  max-width: 960px;
+  margin: 0 auto;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--dark);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-lg);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.35), 0 4px 16px rgba(255,107,0,0.10);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.cookie-banner.visible { opacity: 1; transform: translateY(0); }
+
+.cookie-banner-text strong { display: block; margin-bottom: 0.3rem; font-size: 0.98rem; }
+.cookie-banner-text p {
+  font-size: 0.84rem;
+  line-height: 1.65;
+  color: rgba(255,255,255,0.68);
+}
+.cookie-banner-text a {
+  color: var(--orange);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.cookie-banner-text a:hover { color: #ff8a33; }
+
+.cookie-banner-actions { display: flex; gap: 0.75rem; flex-shrink: 0; }
+.cookie-banner-actions .btn-primary,
+.cookie-banner-actions .btn-secondary {
+  padding: 0.7rem 1.6rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+/* "Refuz" has the same weight as "Accept" — secondary button recoloured for the dark surface */
+.cookie-banner-actions .btn-secondary { color: var(--white); border-color: rgba(255,255,255,0.55); }
+.cookie-banner-actions .btn-secondary:hover { background: var(--white); color: var(--dark); border-color: var(--white); }
+.cookie-banner-actions .btn-primary:focus-visible,
+.cookie-banner-actions .btn-secondary:focus-visible,
+.map-consent .btn-primary:focus-visible,
+.cookie-settings-link:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+/* Footer link that reopens the banner */
+.cookie-settings-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: rgba(255,255,255,0.55);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--ease);
+}
+.cookie-settings-link:hover { color: var(--orange); }
+
+/* Map placeholder shown until consent is given */
+.map-consent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  padding: 1.5rem 1.5rem 6rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,107,0,0.16) 0%, transparent 65%),
+    var(--dark);
+}
+.map-consent[hidden] { display: none; }
+.map-consent p {
+  max-width: 440px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.72);
+}
+.map-consent .btn-primary { font-family: inherit; }
+/* keep the GPS link above the placeholder */
+.map-feature-overlay { z-index: 2; }
+
+@media (max-width: 768px) {
+  .cookie-banner {
+    flex-direction: column;
+    align-items: stretch;
+    left: 0.75rem;
+    right: 0.75rem;
+    bottom: 0.75rem;
+    gap: 1rem;
+    padding: 1.1rem;
+  }
+  .cookie-banner-actions .btn-primary,
+  .cookie-banner-actions .btn-secondary { flex: 1; text-align: center; }
+  .map-consent { padding-bottom: 7rem; }
+}
+
+/* inline "Setări cookie-uri" button inside the privacy policy text */
+.legal-content .legal-inline-btn {
+  color: var(--orange);
+  font-size: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-content .legal-inline-btn:hover { color: var(--orange-dark); }

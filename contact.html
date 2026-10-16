@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ro">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Centru anvelope PNEUMATICA – Contact | Programează o Vizită</title>
-  <meta name="description" content="Contactează Centru anvelope PNEUMATICA pentru programări și informații. Adresă, telefon, program de lucru și formular de contact." />
+  <meta name="description" content="Contactează Centru anvelope PNEUMATICA pentru programări și informații. Adresă, telefon, email și program de lucru." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -38,7 +38,7 @@
     <div class="page-hero-inner">
       <span class="section-tag on-dark">Suntem Aici</span>
       <h1>Contactează-ne</h1>
-      <p>Trimite-ne un mesaj, sună-ne sau vino direct la service. Suntem bucuroși să te ajutăm!</p>
+      <p>Sună-ne pentru programări sau vino direct la service. Suntem bucuroși să te ajutăm!</p>
     </div>
   </header>
 
@@ -50,13 +50,13 @@
       <!-- Info card -->
       <div class="contact-info reveal reveal-delay-1">
         <h2>Informații de Contact</h2>
-        <p>Suntem disponibili în timpul orelor de program pentru orice întrebare sau programare.</p>
+        <p>Suntem disponibili în timpul orelor de program pentru orice întrebare. Programările se fac doar telefonic.</p>
 
         <div class="info-item">
           <span class="info-icon" aria-hidden="true">📍</span>
           <div>
             <strong>Adresă</strong>
-            <p>Calea Zarandului 73<br />Oraș Deva, Județ Hunedoara, România</p>
+            <p>Str. Calea Zarandului Nr. 73<br />Oraș Deva, Județ Hunedoara, România</p>
           </div>
         </div>
 
@@ -65,7 +65,7 @@
           <div>
             <strong>Telefon</strong>
             <p>
-              <a href="tel:+40740000000">+40 724404040</a>
+              <a href="tel:+40724404040">+40 724 404 040</a>
             </p>
           </div>
         </div>
@@ -117,96 +117,25 @@
         </div>
       </div>
 
-      <!-- Form card -->
-      <div class="contact-form-wrap reveal reveal-delay-2">
-        <h2>Trimite un Mesaj pe WhatsApp</h2>
-
-        <form id="contact-form" novalidate>
-
-          <div class="form-group">
-            <label for="name">Nume Complet <span class="required" aria-hidden="true">*</span></label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              placeholder="Ion Popescu"
-              required
-              autocomplete="name"
-            />
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="phone">Telefon <span class="required" aria-hidden="true">*</span></label>
-              <input
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="+40 7xxx xxx xxx"
-                required
-                autocomplete="tel"
-              />
-            </div>
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="exemplu@email.com"
-                autocomplete="email"
-              />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="service">Serviciu Dorit</label>
-            <select id="service" name="service">
-              <option value="">— Selectează un serviciu —</option>
-              <option value="anvelope">Anvelope</option>
-              <option value="jante-auto">Jante auto</option>
-              <option value="vulcanizare">Vulcanizare</option>
-              <option value="echilibrare-roti">Echilibrare roți</option>
-              <option value="hotel-anvelope">Hotel anvelope</option>
-              <option value="anvelope-camioane">Anvelope camioane</option>
-              <option value="anvelope-agricole">Anvelope agricole</option>
-              <option value="presiune-azot">Presiune anvelope cu azot</option>
-              <option value="altul">Altul</option>
-            </select>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="marca">Marca Mașinii</label>
-              <input type="text" id="marca" name="marca" placeholder="ex: Dacia, BMW, VW" />
-            </div>
-            <div class="form-group">
-              <label for="an">Anul Fabricației</label>
-              <input type="number" id="an" name="an" placeholder="ex: 2019" min="1980" max="2026" />
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Mesaj / Descrierea Problemei</label>
-            <textarea
-              id="message"
-              name="message"
-              rows="5"
-              placeholder="Descrieți problema sau serviciul de care aveți nevoie. Cu cât mai multe detalii, cu atât vă putem ajuta mai bine."
-            ></textarea>
-          </div>
-
-          <button type="submit" class="btn-primary btn-full">Trimite Mesajul</button>
-          <p class="form-note" id="form-note" role="status" aria-live="polite"></p>
-
-        </form>
+      <!-- Phone booking card -->
+      <div class="contact-call reveal reveal-delay-2">
+        <span class="section-tag on-dark">Programări</span>
+        <h2>Programează-te Telefonic</h2>
+        <p>Programările se fac exclusiv prin apel telefonic. Sună-ne și îți găsim rapid un interval potrivit.</p>
+        <a href="tel:+40724404040" class="call-number">+40 724 404 040</a>
+        <a href="tel:+40724404040" class="btn-primary">Sună Acum</a>
+        <p class="call-hours">Răspundem în timpul programului de lucru: Luni–Vineri 08:00–17:00, Sâmbătă 08:00–13:00.</p>
       </div>
 
     </div>
 
     <!-- Map: wide horizontal band below the top section -->
     <div class="map-feature reveal reveal-delay-3">
-      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d494.67600339358853!2d22.922629556727227!3d45.87201566053162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x474e8d3a5e3b0447%3A0x6d54dac81b61697c!2sVulcanizare-Anvelope%20Pneumatica!5e1!3m2!1sro!2sro!4v1785509654653!5m2!1sro!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <iframe title="Harta Centru anvelope PNEUMATICA" data-src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d494.67600339358853!2d22.922629556727227!3d45.87201566053162!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x474e8d3a5e3b0447%3A0x6d54dac81b61697c!2sVulcanizare-Anvelope%20Pneumatica!5e1!3m2!1sro!2sro!4v1785509654653!5m2!1sro!2sro" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      <div class="map-consent" id="map-consent">
+        <p>Harta este furnizată de Google și poate folosi cookie-uri. Ea se încarcă doar dacă ești de acord.</p>
+        <button type="button" class="btn-primary" data-map-accept>Acceptă și afișează harta</button>
+      </div>
       <div class="map-feature-overlay">
         <a
           href="https://maps.app.goo.gl/dxoU5CdFXQdrWAe87"
@@ -236,6 +165,8 @@
         <a href="despre-noi.html">Despre Noi</a>
         <a href="servicii.html">Servicii</a>
         <a href="contact.html">Contact</a>
+        <a href="politica-confidentialitate.html">Politica de Confidențialitate</a>
+        <button type="button" class="cookie-settings-link" data-cookie-settings>Setări cookie-uri</button>
       </nav>
     </div>
     <p class="footer-copy">© 2026 Centru Anvelope PNEUMATICA. Toate drepturile rezervate.</p>

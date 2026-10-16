@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 /* ═══════════════════════════════════════════════════════
    Centru anvelope PNEUMATICA – script.js  |  Global JS
    ═══════════════════════════════════════════════════════ */
@@ -79,69 +79,86 @@ const revealObserver = new IntersectionObserver(
 document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
 
-// ── 5. CONTACT FORM (contact.html only) ──────────────────────────────────────
-const contactForm = document.getElementById('contact-form');
-const formNote    = document.getElementById('form-note');
+// ── 5. COOKIE CONSENT (gates third-party embeds, e.g. Google Maps) ───────────
+(function cookieConsent() {
+  const KEY = 'pneumatica-cookie-consent';   // 'accepted' | 'rejected'
 
-// Guard against #contact-form resolving to something that isn't actually a <form>
-if (contactForm && !(contactForm instanceof HTMLFormElement)) {
-  console.error('Error: #contact-form was found but is not a <form> element:', contactForm);
-}
+  const read = () => {
+    try { return localStorage.getItem(KEY); } catch (_) { return null; }
+  };
+  const write = value => {
+    try { localStorage.setItem(KEY, value); } catch (_) { /* storage blocked: choice lasts for this page view only */ }
+  };
 
-if (contactForm instanceof HTMLFormElement && formNote) {
-  contactForm.addEventListener('submit', e => {
-    e.preventDefault();
+  const mapFrame   = document.querySelector('iframe[data-src]');
+  const mapConsent = document.getElementById('map-consent');
 
-    const name  = contactForm.elements['name'].value.trim();
-    const phone = contactForm.elements['phone'].value.trim();
-    const email = contactForm.elements['email'] ? contactForm.elements['email'].value.trim() : '';
-
-    if (!name) {
-      showNote('Vă rugăm introduceți numele complet.', 'error');
-      contactForm.elements['name'].focus();
-      return;
+  function applyConsent(value) {
+    if (!mapFrame) return;
+    if (value === 'accepted') {
+      if (!mapFrame.getAttribute('src')) mapFrame.setAttribute('src', mapFrame.dataset.src);
+      if (mapConsent) mapConsent.hidden = true;
+    } else {
+      // Withdrawn or declined: unload the embed so Google stops receiving requests
+      mapFrame.removeAttribute('src');
+      if (mapConsent) mapConsent.hidden = false;
     }
-    if (!phone) {
-      showNote('Vă rugăm introduceți numărul de telefon.', 'error');
-      contactForm.elements['phone'].focus();
-      return;
-    }
-    if (!/^[+\d][\d\s\-]{7,19}$/.test(phone)) {
-      showNote('Numărul de telefon nu este valid.', 'error');
-      contactForm.elements['phone'].focus();
-      return;
-    }
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showNote('Adresa de email nu este validă.', 'error');
-      contactForm.elements['email'].focus();
-      return;
-    }
-
-    const serviceSelect = contactForm.elements['service'];
-    const service = serviceSelect && serviceSelect.value ? serviceSelect.options[serviceSelect.selectedIndex].text : '';
-    const marca   = contactForm.elements['marca'].value.trim();
-    const an      = contactForm.elements['an'].value.trim();
-    const message = contactForm.elements['message'].value.trim();
-
-    const lines = [`Nume: ${name}`, `Telefon: ${phone}`];
-    if (email)   lines.push(`Email: ${email}`);
-    if (service) lines.push(`Serviciu: ${service}`);
-    if (marca)   lines.push(`Marca: ${marca}`);
-    if (an)      lines.push(`An: ${an}`);
-    if (message) lines.push(`Mesaj: ${message}`);
-
-    formNote.textContent = '';
-    showNote('Se deschide WhatsApp…', 'success');
-
-    window.location.href = `https://wa.me/40770249073?text=${encodeURIComponent(lines.join('\n'))}`;
-    contactForm.reset();
-  });
-
-  function showNote(msg, type) {
-    formNote.textContent = msg;
-    formNote.style.color = type === 'success' ? '#198754' : '#dc3545';
   }
-}
+
+  let banner = null;
+
+  function closeBanner() {
+    if (!banner) return;
+    banner.classList.remove('visible');
+    const old = banner;
+    banner = null;
+    setTimeout(() => old.remove(), 400);
+  }
+
+  function choose(value) {
+    write(value);
+    applyConsent(value);
+    closeBanner();
+  }
+
+  function openBanner() {
+    if (banner) return;
+    banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', 'Setări cookie-uri');
+    banner.innerHTML =
+      '<div class="cookie-banner-text">' +
+        '<strong>Cookie-uri și servicii externe</strong>' +
+        '<p>Site-ul nu folosește cookie-uri de analiză sau publicitate. Singurul serviciu care poate seta cookie-uri este harta Google de pe pagina Contact, pe care o afișăm doar cu acordul tău. ' +
+        'Detalii în <a href="politica-confidentialitate.html#cookies">Politica de Confidențialitate</a>.</p>' +
+      '</div>' +
+      '<div class="cookie-banner-actions">' +
+        '<button type="button" class="btn-secondary" data-consent="rejected">Refuz</button>' +
+        '<button type="button" class="btn-primary" data-consent="accepted">Accept</button>' +
+      '</div>';
+    banner.querySelectorAll('[data-consent]').forEach(btn =>
+      btn.addEventListener('click', () => choose(btn.dataset.consent))
+    );
+    document.body.appendChild(banner);
+    requestAnimationFrame(() => requestAnimationFrame(() => banner && banner.classList.add('visible')));
+  }
+
+  // Initial state
+  const saved = read();
+  applyConsent(saved);
+  if (!saved) openBanner();
+
+  // "Acceptă și afișează harta" button inside the map placeholder
+  document.querySelectorAll('[data-map-accept]').forEach(btn =>
+    btn.addEventListener('click', () => choose('accepted'))
+  );
+
+  // Footer "Setări cookie-uri" link reopens the banner so the choice can be changed
+  document.querySelectorAll('[data-cookie-settings]').forEach(btn =>
+    btn.addEventListener('click', openBanner)
+  );
+})();
 
 
 // ── 6. IMAGE CAROUSELS (any page with a .js-carousel block) ──────────────────

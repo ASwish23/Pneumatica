@@ -133,7 +133,7 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     banner.innerHTML =
       '<div class="cookie-banner-text">' +
         '<strong>Cookie-uri și servicii externe</strong>' +
-        '<p>Site-ul nu folosește cookie-uri de analiză sau publicitate. Singurul serviciu care poate seta cookie-uri este harta Google de pe pagina Contact, pe care o afișăm doar cu acordul tău. ' +
+        '<p><span class="cookie-banner-extra">Site-ul nu folosește cookie-uri de analiză sau publicitate. </span>Singurul serviciu care poate seta cookie-uri este harta Google de pe pagina Contact, pe care o afișăm doar cu acordul tău. ' +
         'Detalii în <a href="politica-confidentialitate.html#cookies">Politica de Confidențialitate</a>.</p>' +
       '</div>' +
       '<div class="cookie-banner-actions">' +
@@ -212,10 +212,12 @@ document.querySelectorAll('.js-carousel').forEach(carousel => {
   nextBtn.addEventListener('click', next);
   prevBtn.addEventListener('click', prev);
 
-  carousel.addEventListener('mouseenter', () => clearInterval(autoplayId));
-  carousel.addEventListener('mouseleave', () => { if (AUTOPLAY_MS > 0) startAutoplay(); });
-  carousel.addEventListener('focusin', () => clearInterval(autoplayId));
-  carousel.addEventListener('focusout', () => { if (AUTOPLAY_MS > 0) startAutoplay(); });
+  // Pause while a mouse hovers or the keyboard is inside. Taps are ignored: on phones a tap fires
+  // mouseenter, which used to stop autoplay until the visitor tapped somewhere else.
+  carousel.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') clearInterval(autoplayId); });
+  carousel.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') restartAutoplay(); });
+  carousel.addEventListener('focusin', e => { if (e.target.matches(':focus-visible')) clearInterval(autoplayId); });
+  carousel.addEventListener('focusout', restartAutoplay);
 
   carousel.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight') next();

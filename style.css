@@ -3,6 +3,24 @@
    style.css  |  Global Stylesheet
    ═══════════════════════════════════════════════════════ */
 
+/* ── Fonts: Montserrat (variable, SIL OFL) hosted on this site, so no request goes to Google ── */
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('fonts/montserrat-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400 900;
+  font-display: swap;
+  src: url('fonts/montserrat-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 
 /* ══════════════════════════════════════════════════════
    1.  CSS CUSTOM PROPERTIES & RESET
@@ -691,6 +709,12 @@ p  { color: var(--gray); line-height: 1.78; }
 .reviews-section .section-intro h2 { color: var(--white); }
 .reviews-section .section-intro p  { color: rgba(255,255,255,0.55); }
 
+.reviews-footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-top: 2.5rem;
+}
 .reviews-carousel-outer {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -849,6 +873,9 @@ p  { color: var(--gray); line-height: 1.78; }
 
 .reviews-arrow-prev svg,
 .reviews-arrow-next svg { width: 20px; height: 20px; }
+/* Hide Swiper's built-in icon font arrow; the inline SVG is the arrow */
+.reviews-arrow-prev::after,
+.reviews-arrow-next::after { display: none; }
 
 .reviews-arrow-prev:hover,
 .reviews-arrow-next:hover {
@@ -1374,6 +1401,8 @@ p  { color: var(--gray); line-height: 1.78; }
 .servicii-arrow-next { right: 0; }
 .servicii-arrow-prev svg,
 .servicii-arrow-next svg { width: 20px; height: 20px; }
+.servicii-arrow-prev::after,
+.servicii-arrow-next::after { display: none; }
 .servicii-arrow-prev:hover,
 .servicii-arrow-next:hover {
   background: var(--orange);
@@ -1522,6 +1551,7 @@ p  { color: var(--gray); line-height: 1.78; }
 .hours-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; }
 .hours-table td { padding: 0.35rem 0; font-size: 0.9rem; color: var(--gray); }
 .hours-table td:last-child { text-align: right; font-weight: 600; color: var(--dark); }
+.hours-table td:first-child { padding-right: 1.5rem; white-space: nowrap; }
 .hours-table tr.closed td { color: var(--gray-muted); }
 
 /* Social links */
@@ -1946,3 +1976,30 @@ p  { color: var(--gray); line-height: 1.78; }
   text-underline-offset: 2px;
 }
 .legal-content .legal-inline-btn:hover { color: var(--orange-dark); }
+
+
+/* ══════════════════════════════════════════════════════
+   15.  REDUCED MOTION  (visitor turned off animations in their OS/browser)
+   ══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  /* Entrance and decorative animations: show the final state straight away */
+  .fade-in,
+  .fade-in-delay { animation: none; }
+  .car-svg       { animation: none; }
+  .reveal        { opacity: 1; transform: none; transition: none; }
+
+  /* Hero photo carousel: no sliding (autoplay is switched off in script.js) */
+  .carousel-track { transition: none; }
+
+  /* Brand logos: stop the endless scroll, show a static centred row without the duplicate set */
+  .logo-ticker-track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    row-gap: 20px;
+  }
+  .ticker-logo[aria-hidden="true"] { display: none; }
+}

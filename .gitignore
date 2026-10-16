@@ -1,0 +1,8 @@
+# Dev-only files: keep them local, never publish them
+node_modules/
+temporary screenshots/
+CLAUDE.md
+serve.mjs
+screenshot.mjs
+package.json
+package-lock.json

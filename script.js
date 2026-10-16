@@ -3,6 +3,9 @@
    Centru anvelope PNEUMATICA – script.js  |  Global JS
    ═══════════════════════════════════════════════════════ */
 
+// Visitors who asked their OS/browser for reduced motion get no autoplay or counting animations
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ── 1. HAMBURGER MENU ────────────────────────────────────────────────────────
 const navbar    = document.getElementById('navbar');
 const hamburger = document.getElementById('hamburger');
@@ -144,10 +147,10 @@ document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
     requestAnimationFrame(() => requestAnimationFrame(() => banner && banner.classList.add('visible')));
   }
 
-  // Initial state
+  // Initial state: only pages with the map ask up front; elsewhere the footer link still opens the banner
   const saved = read();
   applyConsent(saved);
-  if (!saved) openBanner();
+  if (!saved && mapFrame) openBanner();
 
   // "Acceptă și afișează harta" button inside the map placeholder
   document.querySelectorAll('[data-map-accept]').forEach(btn =>
@@ -171,7 +174,7 @@ document.querySelectorAll('.js-carousel').forEach(carousel => {
 
   const slides = Array.from(track.children);
   const parsedAutoplay = parseInt(carousel.dataset.autoplay, 10);
-  const AUTOPLAY_MS = Number.isNaN(parsedAutoplay) ? 6000 : parsedAutoplay; // "0" must stay disabled, not fall back
+  const AUTOPLAY_MS = prefersReducedMotion ? 0 : (Number.isNaN(parsedAutoplay) ? 6000 : parsedAutoplay); // "0" must stay disabled, not fall back
   let current = 0;
   let autoplayId = null;
 
@@ -258,7 +261,7 @@ const counterObserver = new IntersectionObserver(
   { threshold: 0.6 }
 );
 
-statEls.forEach(el => counterObserver.observe(el));
+if (!prefersReducedMotion) statEls.forEach(el => counterObserver.observe(el));
 
 function animateCount(el) {
   const raw     = el.textContent;
